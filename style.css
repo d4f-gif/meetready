@@ -95,7 +95,10 @@ button.ghost {
 }
 button.ghost:hover { border-color: var(--accent); color: var(--accent); }
 .swimmer-row .remove { align-self: flex-end; padding: 8px 11px; }
-.hint { font-size: 12px; margin-top: 10px; }
+.finder { font-size: 13px; margin: 10px 0 2px; }
+.finder a { color: var(--accent); font-weight: 600; text-decoration: none; }
+.finder a:hover { text-decoration: underline; }
+.hint { font-size: 12px; margin-top: 4px; }
 .confirm { font-size: 13px; margin: -4px 0 8px; }
 @media (max-width: 640px) {
   .swimmer-row { flex-direction: column; align-items: stretch; }
