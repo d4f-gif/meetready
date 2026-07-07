@@ -24,10 +24,9 @@
     vals = vals || {};
     var tpl = $("#swimmer-row").content.cloneNode(true);
     var row = tpl.querySelector(".swimmer-row");
-    row.querySelector(".in-name").value = vals.name || "";
-    row.querySelector(".in-club").value = vals.club || "";
-    row.querySelector(".in-state").value = vals.state || "";
     row.querySelector(".in-mid").value = vals.memberId || "";
+    var mid = row.querySelector(".in-mid");
+    mid.addEventListener("keydown", function (e) { if (e.key === "Enter") doLookup(); });
     row.querySelector(".remove").addEventListener("click", function () {
       if ($("#swimmers").children.length > 1) row.remove();
     });
@@ -35,12 +34,7 @@
   }
   function readRows() {
     return Array.prototype.map.call($("#swimmers").children, function (row) {
-      return {
-        name: row.querySelector(".in-name").value.trim(),
-        club: row.querySelector(".in-club").value.trim(),
-        state: row.querySelector(".in-state").value.trim(),
-        memberId: row.querySelector(".in-mid").value.trim()
-      };
+      return {memberId: row.querySelector(".in-mid").value.trim()};
     }).filter(function (e) { return e.memberId; });
   }
 

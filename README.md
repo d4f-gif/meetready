@@ -20,13 +20,16 @@ Everything runs in your browser. There is **no server, no account, no AI, no tok
 - The eligibility and value-ranking logic is `app.js`, copied verbatim from `swimmeet`.
 
 ## How to find a Member ID
-Step 1 is ID entry, not a name search: USA Swimming gates athlete name-search behind a
-logged-in account (`person-api …/Person/Search` returns 403 anonymously), so a token-free,
-no-account static page can't search by name. Instead the page links to USA Swimming's own
-[individual search](https://data.usaswimming.org/datahub/usas/individualsearch) — search the
-name there (girls and boys), open the profile, and copy the Member ID from the page URL.
-Name, club and state on the MeetReady form are optional and only confirm you matched the
-right swimmer (the app shows the club/LSC the API returns next to what you typed).
+The form is one field: the swimmer's USA Swimming Member ID. It isn't a name search — USA
+Swimming gates athlete name-search behind a logged-in account (`person-api …/Person/Search`
+returns 403 anonymously), so a token-free, no-account static page can't search by name.
+
+To get the ID, on the [USA Swimming Data Hub](https://data.usaswimming.org/) sign in (free),
+use Search → Athletes, open the swimmer's page, and read the code in the browser's address
+bar between `/athlete/` and `/best-times`, e.g. in
+`data.usaswimming.org/search/athlete/9688AB9C4AFF4B/best-times` the Member ID is
+`9688AB9C4AFF4B`. Paste that into MeetReady. After lookup the app shows the swimmer's name
+and club straight from the API so you can confirm it's the right swimmer.
 
 ## Files
 - `index.html`, `style.css` — the page and the swimmer input form.

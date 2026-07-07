@@ -24,12 +24,20 @@
         <button id="lookup" type="button" class="primary">Look up times</button>
       </div>
       <p id="lookup-status" class="status"></p>
-      <p class="finder">Don't know the ID?
-        <a href="https://data.usaswimming.org/datahub/usas/individualsearch" target="_blank" rel="noopener">🔍 Find a swimmer's ID on USA Swimming ↗</a></p>
-      <p class="muted hint">On that page, search the swimmer's name (works for girls and boys),
-        open their profile, and copy the <strong>Member ID</strong> from the page's web address.
-        Paste it above. Name, club and state here are optional — they're only used to confirm
-        you matched the right swimmer.</p>
+      <details id="find-id">
+        <summary>Where do I find the Member ID?</summary>
+        <ol>
+          <li>Open the <a href="https://data.usaswimming.org/" target="_blank" rel="noopener">USA Swimming Data Hub ↗</a>.</li>
+          <li>Sign in, or <em>Create a Login</em> (free). Searching a swimmer by name needs a signed-in account.</li>
+          <li>Use <strong>Search → Athletes</strong>, type the swimmer's name (girls and boys both work), and open their page.</li>
+          <li>Look at your browser's address bar. The Member ID is the code between
+            <code>/athlete/</code> and <code>/best-times</code>:
+            <span class="url-eg">data.usaswimming.org/search/athlete/<b>9688AB9C4AFF4B</b>/best-times</span></li>
+          <li>Copy that code (here, <code>9688AB9C4AFF4B</code>) and paste it above.</li>
+        </ol>
+        <p class="muted">After you look it up, MeetReady shows the swimmer's name and club straight
+          from USA Swimming, so you can confirm you've got the right one.</p>
+      </details>
     </section>
 
     <section id="checker" hidden>
@@ -63,12 +71,9 @@
 
   <template id="swimmer-row">
     <div class="swimmer-row">
-      <div class="fields">
-        <label>Swimmer name<input class="in-name" type="text" placeholder="e.g. Ethan Hu"></label>
-        <label>Club<input class="in-club" type="text" placeholder="e.g. Dragon Swim Team"></label>
-        <label>State / ZIP<input class="in-state" type="text" placeholder="e.g. VA"></label>
-        <label>USA Swimming Member ID<input class="in-mid" type="text" placeholder="e.g. CC769BD9092040"></label>
-      </div>
+      <label class="mid-field">USA Swimming Member ID
+        <input class="in-mid" type="text" placeholder="e.g. CC769BD9092040"
+               autocomplete="off" autocapitalize="characters" spellcheck="false"></label>
       <button class="remove ghost" type="button" title="Remove this swimmer">✕</button>
     </div>
   </template>

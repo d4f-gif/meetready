@@ -72,14 +72,12 @@ code { background: var(--line); padding: 1px 5px; border-radius: 4px; font-size:
   display: flex; align-items: flex-end; gap: 10px; padding: 12px;
   background: var(--card); border: 1px solid var(--line); border-radius: 12px; margin: 10px 0;
 }
-.swimmer-row .fields {
-  flex: 1; display: grid; gap: 10px;
-  grid-template-columns: 1.3fr 1.3fr .7fr 1.1fr;
+.swimmer-row .mid-field {
+  flex: 1; display: flex; flex-direction: column; font-size: 12px; color: var(--muted); gap: 4px;
 }
-.swimmer-row label { display: flex; flex-direction: column; font-size: 12px; color: var(--muted); gap: 4px; }
 .swimmer-row input {
-  padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px;
-  background: var(--bg); color: var(--ink); font: inherit;
+  padding: 9px 11px; border: 1px solid var(--line); border-radius: 8px;
+  background: var(--bg); color: var(--ink); font: inherit; letter-spacing: .04em;
 }
 .swimmer-row input:focus { outline: none; border-color: var(--accent); }
 .row-actions { display: flex; gap: 10px; margin: 12px 0 4px; flex-wrap: wrap; }
@@ -95,10 +93,23 @@ button.ghost {
 }
 button.ghost:hover { border-color: var(--accent); color: var(--accent); }
 .swimmer-row .remove { align-self: flex-end; padding: 8px 11px; }
-.finder { font-size: 13px; margin: 10px 0 2px; }
-.finder a { color: var(--accent); font-weight: 600; text-decoration: none; }
-.finder a:hover { text-decoration: underline; }
-.hint { font-size: 12px; margin-top: 4px; }
+#find-id {
+  margin: 12px 0 4px; border: 1px solid var(--line); border-radius: 10px;
+  background: var(--card); padding: 4px 14px;
+}
+#find-id summary {
+  cursor: pointer; font-weight: 600; font-size: 14px; color: var(--accent);
+  padding: 8px 0; list-style-position: inside;
+}
+#find-id ol { margin: 4px 0 6px; padding-left: 20px; font-size: 13px; line-height: 1.6; }
+#find-id li { margin: 3px 0; }
+#find-id a { color: var(--accent); font-weight: 600; }
+.url-eg {
+  display: inline-block; margin-top: 4px; padding: 4px 8px; border-radius: 6px;
+  background: var(--line); font-family: ui-monospace, Menlo, monospace; font-size: 12px;
+  word-break: break-all;
+}
+.url-eg b { color: var(--accent); }
 .confirm { font-size: 13px; margin: -4px 0 8px; }
 @media (max-width: 640px) {
   .swimmer-row { flex-direction: column; align-items: stretch; }
