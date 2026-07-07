@@ -62,8 +62,8 @@
   }
 
   // ---------- dashboard (current standing) ----------
-  function gapCell(grp, course, ev, row) {
-    var std = STD[grp + "|" + course + "|" + ev];
+  function gapCell(gender, grp, course, ev, row) {
+    var std = gender && STD[gender + "|" + grp + "|" + course + "|" + ev];
     var level = row.standard || "<B";
     if (/^slower/i.test(level)) level = "<B";
     if (!std) return [level, "", ""];
@@ -76,6 +76,7 @@
   function confirmLine(sw) {
     // Cross-check what the parent typed against what USA Swimming returned.
     var bits = [];
+    if (sw.gender) bits.push((sw.gender === "F" ? "Girls" : "Boys") + " standards");
     if (sw.apiClub) {
       var mism = sw.inputClub && sw.apiClub.toLowerCase().indexOf(sw.inputClub.toLowerCase()) < 0
                  && sw.inputClub.toLowerCase().indexOf(sw.apiClub.toLowerCase()) < 0;
@@ -112,7 +113,7 @@
         t.innerHTML += "<thead><tr><th>Event</th><th>Best</th><th>Level</th><th>Next</th><th>Need</th><th>Date</th></tr></thead>";
         var tb = el("tbody");
         rows.forEach(function (r) {
-          var g = gapCell(sw.ageGroup, course, r.event, r);
+          var g = gapCell(sw.gender, sw.ageGroup, course, r.event, r);
           tb.appendChild(el("tr", null,
             "<td>" + esc(r.event) + "</td><td>" + esc(r.time) + "</td><td>" + esc(g[0]) +
             "</td><td>" + esc(g[1]) + "</td><td>" + esc(g[2]) + "</td><td>" + esc(r.date) + "</td>"));

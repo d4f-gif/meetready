@@ -322,7 +322,7 @@
         var nxt = null, need = null;
         if (here) {
           var lvl = ORDER.indexOf(level) >= 0 ? level : "<B";
-          var gn = gapToNext(standards[grp + "|" + course + "|" + ev], lvl, here.cs);
+          var gn = gapToNext(sw.gender ? standards[sw.gender + "|" + grp + "|" + course + "|" + ev] : null, lvl, here.cs);
           nxt = gn[0]; need = gn[1];
           if (need !== null && need <= 0) need = null;
         }

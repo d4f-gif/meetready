@@ -36,18 +36,25 @@ and club straight from the API so you can confirm it's the right swimmer.
 - `lookup.js` — live USA Swimming API lookup (Member ID → best times per event/course).
 - `app.js` — pure logic (PDF grid parsing, eligibility, value ranking). Copied from `swimmeet`.
 - `ui.js` — collects inputs, runs the lookup, runs `pdf.js`, paints results.
-- `standards.js` — national motivational-standards table for the "seconds to next cut"
-  column. Currently empty (`{}`); levels still come from the API. Fill later to enable
-  gap-to-next math and open-meet lineup ranking.
+- `standards.js` — the USA Swimming 2024-2028 National Age Group Motivational Standards,
+  gendered (`M`/`F`), all age groups, SCY and LCM, keyed `gender|ageGroup|course|event` in
+  hundredths. Parsed from USA Swimming's official 2024-2028 PDF and spot-checked against the
+  known boys values (matched except one pre-existing typo the PDF corrects). Powers the
+  "Next / Need" column and the open-meet lineup picker.
 - `vendor/pdf.min.js`, `vendor/pdf.worker.min.js` — pdf.js, vendored so nothing loads from
   the internet.
+
+Gender isn't returned by the API, so `lookup.js` infers it: it scores each swim against both
+the boys' and girls' tables and picks whichever reproduces the official levels the API
+returns (boys' cuts are uniformly faster, so the match is decisive). The detected side shows
+in the confirmation line ("Boys standards" / "Girls standards").
 
 ## Publishing to GitHub Pages
 Push this folder to a repo and enable Pages (Settings → Pages → deploy from the folder /
 branch). Privacy note: on a personal account a Pages site is public to anyone with the URL
 even if the source repo is private. The data shown is already public record on USA Swimming.
 
-## Not yet done
-`standards.js` is empty, so the dashboard's "Next / Need" columns and the open-meet lineup
-picker are limited. Qualifying meets (cuts printed in the PDF) work fully. Add the national
-boys+girls motivational-standards table to complete it.
+## Standards refresh
+`standards.js` holds the 2024-2028 cycle. When USA Swimming publishes the next cycle,
+re-parse its official motivational-standards PDF with `pdftotext -layout` (girls cuts left
+B→AAAA, event code middle, boys cuts right AAAA→B) and regenerate `standards.js`.

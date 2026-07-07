@@ -37,6 +37,31 @@
     return Math.round(parseFloat(t) * 100);
   };
 
+  // The API doesn't return a swimmer's gender, but it does return each swim's official
+  // level. Score every swim against both the boys' and girls' motivational tables and pick
+  // whichever reproduces the API's levels — boys' cuts are uniformly faster, so the match
+  // is decisive. Returns "M", "F", or null if there's nothing to go on.
+  var LV = ["B", "BB", "A", "AA", "AAA", "AAAA"];
+  function classify(c, stdRow) {
+    var best = "<B";
+    for (var i = 0; i < LV.length; i++) if (stdRow[LV[i]] != null && c <= stdRow[LV[i]]) best = LV[i];
+    return best;
+  }
+  function inferGender(rows) {
+    var STD = root.SWIM_STANDARDS || {}, mM = 0, mF = 0;
+    rows.forEach(function (r) {
+      var ag = ageGroup(r.ageAtSwim);
+      var rowM = STD["M|" + ag + "|" + r.course + "|" + r.event];
+      var rowF = STD["F|" + ag + "|" + r.course + "|" + r.event];
+      if (!rowM || !rowF) return;
+      var api = r.standard || "<B";
+      if (classify(r.cs, rowM) === api) mM++;
+      if (classify(r.cs, rowF) === api) mF++;
+    });
+    if (mM === 0 && mF === 0) return null;
+    return mF > mM ? "F" : "M";
+  }
+
   function apiCall(path, body) {
     return fetch(API + path, {
       method: body ? "POST" : "GET", headers: HDRS,
@@ -94,7 +119,7 @@
         });
         return {
           name: entry.name || fullName || mid, memberId: mid, age: age, ageGroup: ageGroup(age),
-          usasBest: rows, nvslBest: [],
+          gender: inferGender(rows), usasBest: rows, nvslBest: [],
           apiName: fullName, apiClub: club, apiLsc: lsc,
           inputClub: (entry.club || "").trim(), inputState: (entry.state || "").trim()
         };
