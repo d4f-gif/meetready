@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>MeetReady — Swim Meet Qualifier</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>MeetReady <span class="muted">— swim meet qualifier</span></h1>
+    <p class="muted">Enter a swimmer's USA Swimming details, pull their best times, then drop a
+      meet sheet to see what they qualify for and which events to sign up for. Everything runs
+      in your browser — nothing is uploaded, no account or AI needed.</p>
+  </header>
+
+  <main>
+    <section id="swimmers-sec">
+      <h2>1 · Who's swimming?</h2>
+      <div id="swimmers"></div>
+      <div class="row-actions">
+        <button id="add-swimmer" type="button" class="ghost">+ Add another swimmer</button>
+        <button id="lookup" type="button" class="primary">Look up times</button>
+      </div>
+      <p id="lookup-status" class="status"></p>
+      <p class="muted hint">The <strong>USA Swimming Member ID</strong> is the code in the
+        swimmer's Times-page URL (find the swimmer on
+        <a href="https://data.usaswimming.org/" target="_blank" rel="noopener">data.usaswimming.org</a>
+        or <a href="https://swimstandards.com/" target="_blank" rel="noopener">swimstandards.com</a>
+        and copy the ID from the address bar). Name, club and state are used only to confirm
+        you've matched the right swimmer.</p>
+    </section>
+
+    <section id="checker" hidden>
+      <h2>2 · Check a meet</h2>
+      <p class="muted">Drop a meet-announcement PDF below (or tap to choose). It's parsed in your
+        browser — nothing is uploaded.</p>
+      <label id="drop" for="pdf-input">
+        <span>Drop meet PDF here, or tap to choose</span>
+        <input id="pdf-input" type="file" accept="application/pdf" hidden>
+      </label>
+      <div id="url-row">
+        <input id="pdf-url" type="url" placeholder="…or paste a link to the meet PDF">
+        <button id="pdf-url-go" type="button">Check link</button>
+      </div>
+      <p id="status" class="status"></p>
+      <div id="result"></div>
+    </section>
+
+    <section id="standing" hidden>
+      <h2>Current standing</h2>
+      <div id="dashboard"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p class="muted">Data: USA Swimming official Times API (best time per event and course, plus
+      the official level USA Swimming assigns each swim). Levels come from USA Swimming; the
+      "seconds to next cut" column fills in once a national motivational-standards table is added.
+      Times are pulled live each time you look a swimmer up.</p>
+  </footer>
+
+  <template id="swimmer-row">
+    <div class="swimmer-row">
+      <div class="fields">
+        <label>Swimmer name<input class="in-name" type="text" placeholder="e.g. Ethan Hu"></label>
+        <label>Club<input class="in-club" type="text" placeholder="e.g. Dragon Swim Team"></label>
+        <label>State / ZIP<input class="in-state" type="text" placeholder="e.g. VA"></label>
+        <label>USA Swimming Member ID<input class="in-mid" type="text" placeholder="e.g. CC769BD9092040"></label>
+      </div>
+      <button class="remove ghost" type="button" title="Remove this swimmer">✕</button>
+    </div>
+  </template>
+
+  <script src="vendor/pdf.min.js"></script>
+  <script src="standards.js"></script>
+  <script src="app.js"></script>
+  <script src="lookup.js"></script>
+  <script src="ui.js"></script>
+</body>
+</html>
